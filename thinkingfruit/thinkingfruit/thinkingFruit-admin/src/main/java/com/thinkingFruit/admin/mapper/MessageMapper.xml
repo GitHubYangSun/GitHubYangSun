@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkingFruit.admin.mapper.MessageDao">
+ 
+<select id="getCountByQuery" resultType="java.lang.Integer">
+   select count(`id`)
+   from `t_fishbook_music_message`
+   where 1=1
+   <if test="queryMap.name != null and queryMap.name != ''">
+      and `name` like CONCAT('%',#{queryMap.name},'%')
+   </if>
+   <if test="queryMap.startTime != null and queryMap.startTime != ''">
+      <![CDATA[ and `createTime` > #{queryMap.startTime} ]]>
+			</if>
+			<if test="queryMap.endTime != null and queryMap.endTime != ''">
+       <![CDATA[ and `createTime` < #{queryMap.endTime} ]]>
+   </if>
+</select>
+
+<select id="paginationMessage" resultType="com.thinkingFruit.admin.entity.Message">
+   select `id`,`name`,`email`,`content`,`mobile`,`createTime`
+   from `t_fishbook_music_message`
+   <where>
+   1=1
+   <if test="queryMap.name != null and queryMap.name != ''">
+      and `name` like CONCAT('%',#{queryMap.name},'%')
+   </if>
+   <if test="queryMap.startTime != null and queryMap.startTime != ''">
+      <![CDATA[ and `createTime` > #{queryMap.startTime} ]]>
+			</if>
+			<if test="queryMap.endTime != null and queryMap.endTime != ''">
+       <![CDATA[ and `createTime` < #{queryMap.endTime} ]]>
+   </if>
+   </where> 
+</select>
+
+<delete id="deleteMessage">
+   delete from `t_fishbook_music_message`
+   where `id` = #{id}
+</delete>
+
+   
+</mapper>

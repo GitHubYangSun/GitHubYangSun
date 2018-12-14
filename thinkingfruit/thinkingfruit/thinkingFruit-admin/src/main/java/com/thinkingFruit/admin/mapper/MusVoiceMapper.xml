@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkingFruit.admin.mapper.MusVoiceDao">
+
+	<select id="getCountByQuery" resultType="java.lang.Integer">
+		select count(`id`)
+		from `t_fishbook_music_musvoice`
+		where 1=1
+		<if test="queryMap.startTime != null and queryMap.startTime != ''">
+      <![CDATA[ and `createTime` > #{queryMap.startTime} ]]>
+		</if>
+		<if test="queryMap.endTime != null and queryMap.endTime != ''">
+       <![CDATA[ and `createTime` < #{queryMap.endTime} ]]>
+		</if>
+	</select>
+
+	<select id="paginationMusvoice"
+		resultType="com.thinkingFruit.admin.entity.MusVoice">
+		select
+		`id`,`descVi`,`descVo`,`voicePath`,`videoPath`,`createTime`
+		from
+		`t_fishbook_music_musvoice`
+		<where>
+			1=1
+			<if test="queryMap.startTime != null and queryMap.startTime != ''">
+      <![CDATA[ and `createTime` > #{queryMap.startTime} ]]>
+			</if>
+			<if test="queryMap.endTime != null and queryMap.endTime != ''">
+       <![CDATA[ and `createTime` < #{queryMap.endTime} ]]>
+			</if>
+		</where>
+	</select>
+
+	<delete id="deleteMusvoice">
+		delete from `t_fishbook_music_musvoice`
+		where `id` =
+		#{id}
+	</delete>
+
+	<insert id="addMusvoice">
+		insert into
+		`t_fishbook_music_musvoice`(`descVi`,`descVo`,`voicePath`,`videoPath`,`createTime`)
+		values(#{musvoice.descVi},#{musvoice.descVo},#{musvoice.voicePath},#{musvoice.videoPath},now())
+	</insert>
+
+	<select id="findMusvoiceById"
+		resultType="com.thinkingFruit.admin.entity.MusVoice">
+		select
+		`id`,`voicePath`,`videoPath`,`descVi`,`descVo`,`createTime`
+		from
+		`t_fishbook_music_musvoice`
+		where `id` = #{id}
+	</select>
+
+	<update id="editMusvoice">
+		update `t_fishbook_music_musvoice`
+		<set>
+			`descVi` = #{musvoice.descVi},
+			`descVo` = #{musvoice.descVo},
+			`voicePath` = #{musvoice.voicePath},
+			`videoPath` = #{musvoice.videoPath},
+
+		</set>
+		where `id` = #{musvoice.id}
+	</update>
+
+</mapper>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkingFruit.admin.mapper.VoiceDao">
+
+<select id="getCountByQuery" resultType="java.lang.Integer">
+   select count(`id`)
+   from `t_fishbook_music_voice`
+   where 1=1
+   <if test="queryMap.name != null and queryMap.name != ''">
+      and `name` like CONCAT('%',#{queryMap.name},'%')
+   </if>
+   <if test="queryMap.SongName != null and queryMap.SongName != ''">
+      and `SongName` like CONCAT('%',#{queryMap.SongName},'%')
+   </if>
+   <if test="queryMap.startTime != null and queryMap.startTime != ''">
+      <![CDATA[ and `createTime` > #{queryMap.startTime} ]]>
+	</if>
+	<if test="queryMap.endTime != null and queryMap.endTime != ''">
+       <![CDATA[ and `createTime` < #{queryMap.endTime} ]]>
+   </if>
+</select>
+
+<select id="paginationVoice" resultType="com.thinkingFruit.admin.entity.Voice">
+   select `id`,`name`,`songName`,`mobile`,`songInfo`,`intro`,`voicePath`,`createTime`
+   from `t_fishbook_music_voice`
+   where 1=1 
+   <if test="queryMap.name != null and queryMap.name != ''">
+      and `name` like CONCAT('%',#{queryMap.name},'%')
+   </if>
+   <if test="queryMap.SongName != null and queryMap.SongName != ''">
+      and `SongName` like CONCAT('%',#{queryMap.SongName},'%')
+   </if>
+   <if test="queryMap.startTime != null and queryMap.startTime != ''">
+      <![CDATA[ and `createTime` > #{queryMap.startTime} ]]>
+	</if>
+	<if test="queryMap.endTime != null and queryMap.endTime != ''">
+       <![CDATA[ and `createTime` < #{queryMap.endTime} ]]>
+   </if>
+</select>
+
+<delete id="deleteVoice">
+   delete from `t_fishbook_music_voice`
+   where `id` = #{id}
+</delete>
+
+<insert id="addVoice">
+   insert into `t_fishbook_music_voice`(`name`,`songName`,`mobile`,`songInfo`,`intro`,`voicePath`,`createTime`)
+   values(#{voice.name},#{voice.songName},#{voice.mobile},#{voice.songInfo},#{voice.intro},#{voice.voicePath},now())
+</insert>
+
+<select id="findVoiceById" resultType="com.thinkingFruit.admin.entity.Voice">
+   select `id`,`name`,`songName`,`mobile`,`songInfo`,`intro`,`voicePath`,`createTime`
+   from `t_fishbook_music_voice`
+   where `id` = #{id}
+</select>
+
+<update id="editVoice">
+   update `t_fishbook_music_voice`
+   <set>
+      `name` = #{voice.name},
+      `songName` = #{voice.songName},
+      `mobile` = #{voice.mobile},
+      `songInfo` = #{voice.songInfo},
+      `intro` = #{voice.intro},
+      `voicePath` = #{voice.voicePath}
+   </set>
+   where `id` = #{voice.id}
+</update>
+   
+</mapper>

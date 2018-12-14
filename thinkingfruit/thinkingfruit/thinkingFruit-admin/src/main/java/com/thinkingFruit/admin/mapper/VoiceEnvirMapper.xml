@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkingFruit.admin.mapper.VoiceEnvirDao">
+ 
+<select id="getCountByQuery" resultType="java.lang.Integer">
+   select count(`id`)
+   from `t_fishbook_music_voiceEnvir`
+   where 1=1
+   <if test="queryMap.name != null and queryMap.name != ''">
+      and `name` like CONCAT('%',#{queryMap.name},'%')
+   </if>
+   <if test="queryMap.startTime != null and queryMap.startTime != ''">
+      <![CDATA[ and `createTime` > #{queryMap.startTime} ]]>
+			</if>
+			<if test="queryMap.endTime != null and queryMap.endTime != ''">
+       <![CDATA[ and `createTime` < #{queryMap.endTime} ]]>
+   </if>
+</select>
+
+<select id="paginationEnvir" resultType="com.thinkingFruit.admin.entity.VoiceEnvir">
+   select `id`,`name`,`imagePath`,`intro`,`createTime`
+   from `t_fishbook_music_voiceEnvir`
+   <where>
+   1=1
+   <if test="queryMap.name != null and queryMap.name != ''">
+      and `name` like CONCAT('%',#{queryMap.name},'%')
+   </if>
+   <if test="queryMap.startTime != null and queryMap.startTime != ''">
+      <![CDATA[ and `createTime` > #{queryMap.startTime} ]]>
+			</if>
+			<if test="queryMap.endTime != null and queryMap.endTime != ''">
+       <![CDATA[ and `createTime` < #{queryMap.endTime} ]]>
+   </if>
+   </where> 
+</select>
+
+<delete id="deleteEnvir">
+   delete from `t_fishbook_music_voiceEnvir`
+   where `id` = #{id}
+</delete>
+
+<insert id="addEnvir">
+   insert into `t_fishbook_music_voiceEnvir`(`name`,`imagePath`,`intro`,`createTime`)
+   values(#{envir.name},#{envir.imagePath},#{envir.intro},now())
+</insert>
+
+<select id="findEnvirById" resultType="com.thinkingFruit.admin.entity.VoiceEnvir">
+   select `id`,`name`,`imagePath`,`intro`,`createTime`
+   from `t_fishbook_music_voiceEnvir`
+   where `id` = #{id}
+</select>
+
+<update id="editEnvir">
+   update `t_fishbook_music_voiceEnvir`
+   <set>
+      `name` = #{envir.name},
+      `imagePath` = #{envir.imagePath},
+      `intro` = #{envir.intro}
+   </set>
+   where `id` = #{envir.id}
+</update>
+   
+</mapper>
