@@ -113,9 +113,6 @@
 							<dd class="">
 								<a href="<%=basePath%>/notice" target="main">公告管理</a>
 							</dd>
-							<dd class="">
-								<a href="<%=basePath%>/news" target="main">新闻管理</a>
-							</dd>
 						</dl></li>
 					<li name="left_mall" class="layui-nav-item edging"><a
 						name="left_a" href="<%=basePath%>/voiceEnvir" target="main"> <i
@@ -130,25 +127,6 @@
 							<li class="layui-nav-item layui-nav-title edging"
 								style="height: 55px;"><a
 								style="line-height: 57px; font-size: 18px;">系统管理</a></li>
-						</shiro:hasPermission>
-						<shiro:hasPermission name="role:manager">
-							<li name="left_system" class="layui-nav-item edging"><a
-								name="left_a" href="<%=basePath%>/role" target="main"> <i
-									class="layui-icon">&#xe609;</i> <cite>角色管理</cite>
-							</a></li>
-						</shiro:hasPermission>
-						<shiro:hasPermission name="permission:manager">
-							<li name="left_system" class="layui-nav-item edging"><a
-								name="left_a" href="<%=basePath%>/permission" target="main">
-									<i class="layui-icon">&#xe63c;</i> <cite>权限管理</cite>
-							</a></li>
-						</shiro:hasPermission>
-						<shiro:hasPermission name="permission:tree">
-							<li name="left_system"
-								class="layui-nav-item content_manage edging"><a
-								name="left_a" href="<%=basePath%>/permission/infoson?id=0"
-								target="main"> <i class="layui-icon">&#xe62e;</i> <cite>权限树</cite>
-							</a></li>
 						</shiro:hasPermission>
 						<shiro:hasPermission name="user:manager">
 							<li name="left_system" class="layui-nav-item user edging"><a

@@ -6,6 +6,12 @@
 		select count(`id`)
 		from `t_fishbook_music_musvoice`
 		where 1=1
+		<if test="queryMap.name != null and queryMap.name != ''">
+			and `name` like CONCAT('%',#{queryMap.name},'%')
+		</if>
+		<if test="queryMap.state != null and queryMap.state != ''">
+			and `state` = #{queryMap.state}
+		</if>
 		<if test="queryMap.startTime != null and queryMap.startTime != ''">
       <![CDATA[ and `createTime` > #{queryMap.startTime} ]]>
 		</if>
@@ -17,11 +23,14 @@
 	<select id="paginationMusvoice"
 		resultType="com.thinkingFruit.admin.entity.MusVoice">
 		select
-		`id`,`descVi`,`descVo`,`voicePath`,`videoPath`,`createTime`
+		`id`,`name`,`author`,`desc`,`imagePath`,`videoPath`,`createTime`
 		from
 		`t_fishbook_music_musvoice`
 		<where>
 			1=1
+			<if test="queryMap.name != null and queryMap.name != ''">
+				and `name` like CONCAT('%',#{queryMap.name},'%')
+			</if>
 			<if test="queryMap.startTime != null and queryMap.startTime != ''">
       <![CDATA[ and `createTime` > #{queryMap.startTime} ]]>
 			</if>
@@ -39,14 +48,14 @@
 
 	<insert id="addMusvoice">
 		insert into
-		`t_fishbook_music_musvoice`(`descVi`,`descVo`,`voicePath`,`videoPath`,`createTime`)
-		values(#{musvoice.descVi},#{musvoice.descVo},#{musvoice.voicePath},#{musvoice.videoPath},now())
+		`t_fishbook_music_musvoice`(`name`,`author`,`desc`,`imagePath`,`videoPath`,`createTime`)
+		values(#{musvoice.name},#{musvoice.author},#{musvoice.desc},#{musvoice.imagePath},#{musvoice.videoPath},now())
 	</insert>
 
 	<select id="findMusvoiceById"
 		resultType="com.thinkingFruit.admin.entity.MusVoice">
 		select
-		`id`,`voicePath`,`videoPath`,`descVi`,`descVo`,`createTime`
+		`id`,`name`,`author`,`imagePath`,`videoPath`,`desc`,`createTime`
 		from
 		`t_fishbook_music_musvoice`
 		where `id` = #{id}
@@ -55,9 +64,10 @@
 	<update id="editMusvoice">
 		update `t_fishbook_music_musvoice`
 		<set>
-			`descVi` = #{musvoice.descVi},
-			`descVo` = #{musvoice.descVo},
-			`voicePath` = #{musvoice.voicePath},
+			`name` = #{musvoice.name},
+			`author` = #{musvoice.author},
+			`desc` = #{musvoice.desc},
+			`imagePath` = #{musvoice.imagePath},
 			`videoPath` = #{musvoice.videoPath},
 
 		</set>

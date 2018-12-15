@@ -3,7 +3,6 @@ package com.thinkingFruit.admin.controller;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +15,7 @@ import com.thinkingFruit.admin.entity.Message;
 import com.thinkingFruit.admin.service.MessageService;
 import com.ysdevelop.common.page.Pagination;
 import com.ysdevelop.common.result.Result;
-import com.ysdevelop.common.utils.HttpUtils;
+import com.ysdevelop.common.utils.HttpUtil;
 import com.ysdevelop.common.utils.JSONHelper;
 /**
  * 
@@ -44,7 +43,7 @@ public class MessageController {
 		@RequestMapping(value = "/pagination", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
 		@ResponseBody
 		public String pagination(HttpServletRequest request,Pagination<Message> pagination){
-			Map<String, String> queryMap = HttpUtils.getParameterMap(request);
+			Map<String, String> queryMap = HttpUtil.getParameterMap(request);
 			messageService.paginationMessage(pagination,queryMap);
 			return JSONHelper.bean2json(Result.successPaginationData(pagination.getItems(), pagination.getTotalItemsCount()));
 		}

@@ -27,11 +27,10 @@ var musvoice_index_ops={
 				   var tableIns = table.render({
 				       elem: '#dateTable'                  //指定原始表格元素选择器（推荐id选择器）  //容器高度
 				       , cols: [[                          //标题栏
-                             {field: 'id', title: '编号',align: 'center', width: 100}
-                           , {field: 'voicePath', title: '音频地址', align: 'center',width: 150}
-				           , {field: 'descVo', title: '音频简介',align: 'center',width: 150}
-				           , {field: 'videoPath', title: '视频地址', align: 'center',width: 150}
-				           , {field: 'descVi', title: '视频简介', align: 'center',width: 150}
+                             {field: 'id', title: '编号',align: 'center', width: 70}
+				           , {field: 'name', title: '歌曲名字', width: 150,align: 'center'}
+				           , {field: 'author', title: '作者', width: 100,align: 'center'}
+				           , {field: 'desc', title: '简介',align: 'center',width: 150}
 				           , {field: 'createTime', title: '创建时间', templet:'#date_formate',align: 'center',width: 150}
 				           , {title: '操作', width: 250,height: 40, align: 'center', templet: '#barOption'} //这里的toolbar值是模板元素的选择器
 				       ]]
@@ -55,11 +54,13 @@ var musvoice_index_ops={
 				   
 					//查询信息
 					$(".btn-serach").on('click',function(){						
+						var name = $("input[ name='name']").val();
 						var startTime = $("input[ name='startTime']").val();
 						var endTime = $("input[ name='endTime']").val();
 						
 						tableIns.reload({
 								where: { //设定异步数据接口的额外参数，任意设
+									name: name,
 									startTime : startTime,
 									endTime : endTime
 								}

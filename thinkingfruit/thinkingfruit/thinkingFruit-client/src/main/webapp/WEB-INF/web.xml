@@ -111,7 +111,7 @@
 	</filter-mapping>
 	
 	<welcome-file-list>   
-	    <welcome-file>/webpage/user/login.jsp</welcome-file>   
+	    <welcome-file>/webpage/yushu/index.jsp</welcome-file>   
 	</welcome-file-list>  
 	
 	<error-page>

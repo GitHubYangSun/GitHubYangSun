@@ -14,9 +14,13 @@ var musvoice_set_ops = {
 	eventBind : function() {
 		// 立即添加按钮的点击事件
 		$(".layui-input-block .layui-btn").click(function() {
-					var descVi = $("input[name='descVi']").val();
-					var descVo = $("input[name='descVo']").val();
-					var voicePath = $("input[name='voicePath']").val();
+					console.log("aaaaaa");
+					var titleTarget = $("input[name='name']");
+					var name = titleTarget.val();
+					var author = $("input[name='author']").val();
+					var descTarget = $("input[name='desc']");
+					var desc = descTarget.val();
+					var imagePath = $("input[name='imagePath']").val();
 					var videoPath = $("input[name='videoPath']").val();
 					var id = $("input[name='id']").val();
 					// 判断是添加还是修改
@@ -32,12 +36,14 @@ var musvoice_set_ops = {
 
 						data : {
 							id : id,
-							descVi : descVi,
-							descVo : descVo,
-							voicePath : voicePath,
+							name : name,
+							author : author,
+							desc : desc,
+							imagePath : imagePath,
 							videoPath : videoPath
 						},
 						success : function(res) {
+							console.log("author" + author)
 							$(".layui-input-block .layui-btn").removeClass(
 									"layui-btn-disabled");
 							var callback = null;
@@ -61,30 +67,28 @@ var musvoice_set_ops = {
 		layui.use('upload', function() {
 			var upload = layui.upload;
 			upload.render({
+				elem : '#uploadImage',
+				url : WEB_ROOT + '/qiniu/uploadImage',
+				done : function(res) {
+					$("input[name='imagePath']").val(res.data);
+					$('img').show();
+					$('img').attr('src', res.data);
+					console.log(res);
+					console.log('上传完毕'); // 上传成功返回值，必须为json格式
+				}
+			});
+			upload.render({
 				elem : '#uploadAudio',
 				url : WEB_ROOT + '/qiniu/uploadAudio',
 				accept: 'audio',
 				done : function(res) {
-					$("input[name='voicePath']").val(res.data);
+					$("input[name='videoPath']").val(res.data);
 					$('audio').show();
 					$('audio').attr('src', res.data);
 					console.log(res);
 					console.log('上传完毕'); // 上传成功返回值，必须为json格式
 				}
 			});
-			upload.render({
-				elem: '#uploadVideo',
-				url : WEB_ROOT+'/upload/video?videoType=0',
-				accept:'video',
-				done : function(res) {
-					// 上传成功返回值，必须为json格式
-					common_ops.alert("上传成功",null);
-					$("input[name='videoPath']").attr("value",res.data.videoPath);
-					
-					//添加视频
-					$("#video").attr("src",WEB_ROOT+res.data.videoPath);
-				}
-		});
 		});
 		
 
@@ -109,9 +113,10 @@ var musvoice_set_ops = {
 				type : 'get',
 				dataType : 'json',
 				success : function(res) {
-					$("input[name='descVi']").val(res.data.descVi);
-					$("input[name='descVo']").val(res.data.descVo);
-					$("input[name='voicePath']").val(res.data.voicePath);
+					$("input[name='name']").val(res.data.name);
+					$("input[name='author']").val(res.data.author);
+					$("input[name='desc']").val(res.data.desc);
+					$("input[name='imagePath']").val(res.data.imagePath);
 					$("input[name='videoPath']").val(res.data.videoPath);
 					that.renderFrom();
 				}

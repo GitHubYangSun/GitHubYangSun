@@ -16,7 +16,7 @@ import com.thinkingFruit.admin.entity.VoiceEnvir;
 import com.thinkingFruit.admin.service.VoiceEnvirService;
 import com.ysdevelop.common.page.Pagination;
 import com.ysdevelop.common.result.Result;
-import com.ysdevelop.common.utils.HttpUtils;
+import com.ysdevelop.common.utils.HttpUtil;
 import com.ysdevelop.common.utils.JSONHelper;
 
 @Controller
@@ -42,7 +42,7 @@ public class VoiceEnvirController {
 	@RequestMapping(value = "/pagination", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String pagination(HttpServletRequest request,Pagination<VoiceEnvir> pagination){
-		Map<String, String> queryMap = HttpUtils.getParameterMap(request);
+		Map<String, String> queryMap = HttpUtil.getParameterMap(request);
 		voiceEnvirService.paginationEnvir(pagination,queryMap);
 		return JSONHelper.bean2json(Result.successPaginationData(pagination.getItems(), pagination.getTotalItemsCount()));
 	}

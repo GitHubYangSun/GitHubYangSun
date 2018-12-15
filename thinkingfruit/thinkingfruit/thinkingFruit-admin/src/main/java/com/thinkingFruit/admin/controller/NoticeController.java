@@ -12,12 +12,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 import com.thinkingFruit.admin.entity.Notice;
 import com.thinkingFruit.admin.service.NoticeService;
 import com.ysdevelop.common.page.Pagination;
 import com.ysdevelop.common.result.Result;
-import com.ysdevelop.common.utils.HttpUtils;
+import com.ysdevelop.common.utils.HttpUtil;
 import com.ysdevelop.common.utils.JSONHelper;
 /**
  * 
@@ -45,7 +44,7 @@ public class NoticeController {
 		@RequestMapping(value = "/pagination", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
 		@ResponseBody
 		public String pagination(HttpServletRequest request,Pagination<Notice> pagination){
-			Map<String, String> queryMap = HttpUtils.getParameterMap(request);
+			Map<String, String> queryMap = HttpUtil.getParameterMap(request);
 			newsService.paginationNews(pagination,queryMap);
 			return JSONHelper.bean2json(Result.successPaginationData(pagination.getItems(), pagination.getTotalItemsCount()));
 		}

@@ -42,9 +42,14 @@ body {
 							<input type="text" readonly="readonly" class="layui-input"
 								value="" placeholder="截止日" name="endTime">
 						</div>
+						<div class="layui-input-inline xbs768">
+							<input type="text" name="name" value="" placeholder="请输入歌曲名字"
+								autocomplete="off" class="layui-input">
+						</div>
 
 					</div>
-					<div class="layui-input-inline xbs768" style="width: 80px;margin-left: 92%; margin-top: -9%;">
+					
+					<div class="layui-input-inline xbs768" style="width: 80px;margin-left: 92%; margin-top: -6%;">
 						<button class="layui-btn btn-serach" lay-submit=""
 							lay-filter="sreach">
 							<i class="layui-icon">&#xe615;</i>
